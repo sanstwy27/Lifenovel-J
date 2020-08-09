@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanstwy27.reactfb.dao.PostDao">
+
+    <!-- List<Post> getPosts(List<Integer> userIds, Integer offset, Integer limit); -->
+    <select id="getPosts" resultType="com.sanstwy27.reactfb.bean.Post">
+        SELECT * FROM posts WHERE author_id IN
+        <foreach collection="userIds" item="user_id" separator="," open="(" close=")">
+            #{user_id}
+        </foreach>
+        ORDER BY updated_at DESC, created_at DESC
+        <if test="limit!=null and !limit.equals('')">
+            LIMIT #{limit}
+        </if>
+        <if test="offset!=null and !offset.equals('')">
+            OFFSET #{offset}
+        </if>
+    </select>
+
+    <!-- int createPost(Post post); -->
+    <insert id="createPost" useGeneratedKeys="true" keyProperty="id">
+        insert into posts (
+        <trim suffixOverrides=",">
+            author_id,
+            <if test="body!=null and !body.equals('')">
+                body,
+            </if>
+            page_id,
+            <if test="createdAt!=null">
+                created_at,
+            </if>
+            <if test="updatedAt!=null">
+                updated_at,
+            </if>
+            <if test="photoUrlsJson!=null">
+                photo_urls_json
+            </if>
+        </trim>
+        )
+        values(
+        <trim suffixOverrides=",">
+            #{authorId},
+            <if test="body!=null and !body.equals('')">
+                #{body},
+            </if>
+            #{pageId},
+            <if test="createdAt!=null">
+                #{createdAt},
+            </if>
+            <if test="updatedAt!=null">
+                #{updatedAt},
+            </if>
+            <if test="photoUrlsJson!=null">
+                #{photoUrlsJson}
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <!-- int updatePost(Post post); -->
+    <update id="updatePost">
+        update posts
+        <set>
+            <if test="authorId!=null and !authorId.equals('')">
+                author_id = #{authorId},
+            </if>
+            <if test="body!=null and !body.equals('')">
+                body = #{body},
+            </if>
+            <if test="pageId!=null and !pageId.equals('')">
+                page_id = #{pageId},
+            </if>
+            <if test="createdAt!=null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt!=null">
+                updated_at = #{updatedAt},
+            </if>
+            <if test="photoUrlsJson!=null">
+                photo_urls_json
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <!-- int deletePost(Integer id); -->
+    <delete id="deletePost">
+        delete from posts where id=#{id}
+    </delete>
+
+</mapper>

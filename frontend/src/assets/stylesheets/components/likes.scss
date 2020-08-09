@@ -1,0 +1,47 @@
+@import '../base/colors.scss'; 
+
+.post-nav {
+  .liked {
+    color: #4679DE; 
+  }
+
+  .fa-thumbs-up {
+    transition-duration: 1s; 
+    transition-property: transform; 
+  }
+
+  .like-btn-container {
+
+    &:hover .fa-thumbs-up {
+      transform: scale(1.3) rotate(-35deg); 
+      -webkit-transform: scale(1.3) rotate(-35deg); 
+    }
+  }
+}
+
+.post-response {
+  display: flex;
+  padding: 10px 0px 0px;
+
+  .post-feedback {
+    color: rgb(114, 114, 114);
+    font-size: 13px;
+  }
+  
+  .post-feedback p span {
+      border-radius: 50%;
+      background-image: linear-gradient(rgb(111, 162, 255), rgb(70, 121, 222));
+      padding: 1px 4.7px 5px 4.7px;
+      font-size: 11px;
+
+      i {
+        color: white;
+      }
+  }
+  
+  .post-feedback p:hover {
+      text-decoration: underline;
+      cursor: pointer;
+  }
+
+}

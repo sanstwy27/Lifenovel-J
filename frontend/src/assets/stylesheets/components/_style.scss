@@ -1,0 +1,79 @@
+@import '../base/fonts.scss';
+@import '../base/colors.scss';
+
+.intro {
+  .duck {
+    width: 50px;
+    height: auto;
+    -webkit-filter: grayscale(100%);
+
+    &:hover {
+      -webkit-filter: none;
+    }
+  }
+}
+
+
+body {
+  font-family: $sans-serif;
+  font-size: 12px;
+}
+
+.main {
+  background: $faded-blue;
+}
+
+.main-content {
+  margin: auto;
+  padding: 20px 0;
+  width: 100%;
+  background: $faded-blue;
+}
+
+a {
+  color: $facebook-blue;
+}
+
+
+select {
+  outline: none !important;
+  -webkit-appearance: menulist;
+  -webkit-rtl-ordering: logical;
+}
+
+ul {
+  display: flex;
+  align-items: center;
+}
+
+::placeholder {
+  color: $medium-gray;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-vert {
+  display: flex;
+  flex-direction: column;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  color: $red;
+}
+
+.hidden {
+  display: none;
+}

@@ -1,0 +1,99 @@
+@import '../base/fonts.scss';
+@import '../base/colors.scss';
+
+.nav-bar-container, .user-nav-bar-container  {
+  background-color: $facebook-blue;
+  border-bottom: 1px solid $dark-blue;
+  color: white;
+}
+
+.nav-bar, .user-nav-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-bar {
+  padding: 10px 0;
+}
+
+.nav-bar-container {
+  background-image: linear-gradient($muted-facebook-blue, $facebook-blue 50%);
+}
+
+.user-nav-bar-container {
+  position: fixed;
+  width: 100%;
+  z-index: 12;
+  align-items: center;
+  padding: 5px;
+  background: $light-facebook-blue;
+}
+
+.logo {
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 38px;
+  height: 60px;
+
+  h1 {
+    position: relative;
+    top: 10px;
+    vertical-align: bottom;
+  }
+}
+
+.logo:hover {
+  text-decoration: none;
+}
+
+.header-btn {
+  background: $light-facebook-blue;
+  border: 1px solid $muted-dark-blue;
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  width: 50px;
+  padding: 0 3px;
+  height: 23px;
+}
+
+.header-btn:hover {
+  background: $facebook-blue;
+}
+
+.header-login-form {
+
+  td {
+    padding-left: 12px;
+  }
+
+  input:not([type="submit"]) {
+    border: 1px solid $navy-blue;
+    background: white;
+    height: 16px;
+    width: 142px;
+    color: black;
+    font-size: 12px;
+    padding: 3px;
+  }
+
+  input[type="password"] {
+    font-size: 16px;
+  }
+
+  a, button {
+    color: $baby-blue;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+}
+
+.user-icon {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+}

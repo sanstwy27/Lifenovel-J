@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanstwy27.reactfb.dao.UserRelationshipDao">
+
+    <!-- List<UserRelationship> getUserRelationship(Integer userId); -->
+    <select id="getUserRelationship" resultType="com.sanstwy27.reactfb.bean.UserRelationship">
+        SELECT * FROM user_relationships WHERE user1_id = #{userId} OR user2_id = #{userId}
+    </select>
+
+    <!-- int createUserRelationship(UserRelationship userRelationship); -->
+    <insert id="createUserRelationship" useGeneratedKeys="true" keyProperty="id">
+        insert into user_relationships (
+        <trim suffixOverrides=",">
+            user1_id,
+            user2_id,
+            <if test="relType!=null and !relType.equals('')">
+                rel_type,
+            </if>
+            <if test="createdAt!=null">
+                created_at,
+            </if>
+            <if test="updatedAt!=null">
+                updated_at
+            </if>
+        </trim>
+        )
+        values(
+        <trim suffixOverrides=",">
+            #{user1Id},
+            #{user2Id},
+            <if test="relType!=null and !relType.equals('')">
+                #{relType},
+            </if>
+            <if test="createdAt!=null">
+                #{createdAt},
+            </if>
+            <if test="updatedAt!=null">
+                #{updatedAt}
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <!-- int updateUserRelationship(UserRelationship userRelationship); -->
+    <update id="updateUserRelationship">
+        update user_relationships
+        <set>
+            <if test="user1Id!=null and !user1Id.equals('')">
+                user1_id = #{user1Id},
+            </if>
+            <if test="user2Id!=null and !user2Id.equals('')">
+                user2_id = #{user2Id},
+            </if>
+            <if test="relType!=null and !relType.equals('')">
+                rel_type = #{relType},
+            </if>
+            <if test="createdAt!=null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt!=null">
+                updated_at = #{updatedAt},
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <!-- int deleteUserRelationship(Integer userRelationshipId); -->
+    <delete id="deleteUserRelationship">
+        delete from user_relationships where id=#{id}
+    </delete>
+
+</mapper>

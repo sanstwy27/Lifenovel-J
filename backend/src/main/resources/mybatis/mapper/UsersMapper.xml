@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanstwy27.reactfb.dao.UserDao">
+
+    <!-- User getUser(Integer userId); -->
+    <select id="getUser" resultType="com.sanstwy27.reactfb.bean.User">
+        SELECT
+            id,
+            first_name,
+            last_name,
+            email,
+            mobile_number,
+            birth_date,
+            gender,
+            profile_photo
+         FROM users WHERE email=#{email} AND password_digest=#{passwordDigest}
+    </select>
+
+    <!-- User getUserByToken(String token); -->
+    <select id="getUserByToken" resultType="com.sanstwy27.reactfb.bean.User">
+        SELECT
+            id,
+            session_token
+         FROM users
+         WHERE session_token=#{sessionToken}
+    </select>
+
+    <!-- List<User> getUsers(List<Integer> userIds); -->
+    <select id="getUsers" resultType="com.sanstwy27.reactfb.bean.User">
+        SELECT * FROM users WHERE id IN
+        <foreach collection="list" item="user_id" separator="," open="(" close=")">
+            #{user_id}
+        </foreach>
+    </select>
+
+    <!-- List<User> searchUsers(String searchText); -->
+    <select id="searchUsers" resultType="com.sanstwy27.reactfb.bean.User">
+        SELECT * FROM users WHERE CONCAT(first_name, ' ',  last_name) LIKE CONCAT('%', #{searchText}, '%')
+    </select>
+
+    <!-- int updateUser(User user); -->
+    <update id="updateUser">
+        update users
+        <set>
+            <if test="firstName!=null and !firstName.equals('')">
+                first_name = #{firstName},
+            </if>
+            <if test="lastName!=null and !lastName.equals('')">
+                last_name = #{lastName},
+            </if>
+            <if test="email!=null and !email.equals('')">
+                email = #{email},
+            </if>
+            <if test="mobileNumber!=null and !mobileNumber.equals('')">
+                mobile_number = #{mobileNumber},
+            </if>
+            <if test="birthDate!=null">
+                birth_date = #{birthDate},
+            </if>
+            <if test="gender!=null and !gender.equals('')">
+                gender = #{gender},
+            </if>
+            <if test="passwordDigest!=null and !passwordDigest.equals('')">
+                password_digest = #{passwordDigest},
+            </if>
+            <if test="sessionToken!=null and !sessionToken.equals('')">
+                session_token = #{sessionToken},
+            </if>
+            <if test="createdAt!=null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt!=null">
+                updated_at = #{updatedAt},
+            </if>
+            <if test="profilePhoto!=null">
+                profile_photo = #{profilePhoto}
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <!-- int updateUserByToken(String token); -->
+    <update id="updateUserByToken">
+        <if test="sessionToken!=null and !sessionToken.equals('')">
+            update users set session_token = "" where session_token = #{token}
+        </if>
+    </update>
+
+    <!-- int createUser(User user); -->
+    <insert id="createUser" useGeneratedKeys="true" keyProperty="id">
+        insert into users (
+        <trim suffixOverrides=",">
+            <if test="firstName!=null and !firstName.equals('')">
+                first_name,
+            </if>
+            <if test="lastName!=null and !lastName.equals('')">
+                last_name,
+            </if>
+            <if test="email!=null and !email.equals('')">
+                email,
+            </if>
+            <if test="mobileNumber!=null and !mobileNumber.equals('')">
+                mobile_number,
+            </if>
+            <if test="birthDate!=null">
+                birth_date,
+            </if>
+            <if test="gender!=null and !gender.equals('')">
+                gender,
+            </if>
+            <if test="passwordDigest!=null and !passwordDigest.equals('')">
+                password_digest,
+            </if>
+            <if test="sessionToken!=null and !sessionToken.equals('')">
+                session_token,
+            </if>
+            <if test="createdAt!=null">
+                created_at,
+            </if>
+            <if test="updatedAt!=null">
+                updated_at,
+            </if>
+            <if test="profilePhoto!=null">
+                profile_photo
+            </if>
+        </trim>
+        )
+        values(
+        <trim suffixOverrides=",">
+            <if test="firstName!=null and !firstName.equals('')">
+                #{firstName},
+            </if>
+            <if test="lastName!=null and !lastName.equals('')">
+                #{lastName},
+            </if>
+            <if test="email!=null and !email.equals('')">
+                #{email},
+            </if>
+            <if test="mobileNumber!=null and !mobileNumber.equals('')">
+                #{mobileNumber},
+            </if>
+            <if test="birthDate!=null">
+                #{parentId},
+            </if>
+            <if test="gender!=null and !gender.equals('')">
+                #{gender},
+            </if>
+            <if test="passwordDigest!=null and !passwordDigest.equals('')">
+                #{passwordDigest},
+            </if>
+            <if test="sessionToken!=null and !sessionToken.equals('')">
+                #{sessionToken},
+            </if>
+            <if test="createdAt!=null">
+                #{createdAt},
+            </if>
+            <if test="updatedAt!=null">
+                #{updatedAt},
+            </if>
+            <if test="profilePhoto!=null">
+                #{profilePhoto}
+            </if>
+        </trim>
+        )
+    </insert>
+
+</mapper>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanstwy27.reactfb.dao.CommentDao">
+
+    <resultMap type="com.sanstwy27.reactfb.bean.Comment" id="CommentsResult">
+        <id column="id" property="id"/>
+        <result column="author_id" property="authorId"/>
+        <result column="commentable_type" property="commentableType"/>
+        <result column="commentable_id" property="commentableId"/>
+        <result column="body" property="body"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+        <collection property="childCommentIds" column="id" select="getChildCommentIds"/>
+    </resultMap>
+    <select id="getChildCommentIds" resultType="int">
+        SELECT id FROM comments WHERE parent_id=#{id}
+    </select>
+
+    <!-- List<Comment> getComments(); -->
+    <select id="getComments" parameterType="com.sanstwy27.reactfb.bean.Comment" resultMap="CommentsResult">
+        SELECT
+            id,
+            author_id,
+            commentable_type,
+            commentable_id,
+            body,
+            parent_id,
+            created_at,
+            updated_at
+        FROM comments
+        WHERE commentable_type = 'Post' AND commentable_id IN
+        <foreach collection="list" item="post_id" separator="," open="(" close=")">
+            #{post_id}
+        </foreach>
+        ORDER BY created_at ASC, updated_at ASC
+    </select>
+
+    <!-- getCommentById(Integer id); -->
+    <select id="getCommentById" resultType="com.sanstwy27.reactfb.bean.Comment" resultMap="CommentsResult">
+        SELECT * FROM comments WHERE id=#{id}
+    </select>
+
+    <!-- int createComment(Comment comment); -->
+    <insert id="createComment" useGeneratedKeys="true" keyProperty="id">
+        insert into comments(
+            <trim suffixOverrides=",">
+                author_id,
+                <if test="commentableType!=null and !commentableType.equals('')">
+                    commentable_type,
+                </if>
+                commentable_id,
+                <if test="body!=null and !body.equals('')">
+                    body,
+                </if>
+                parent_id,
+                <if test="createdAt!=null">
+                    created_at,
+                </if>
+                <if test="updatedAt!=null">
+                    updated_at
+                </if>
+            </trim>
+            )
+        values(
+            <trim suffixOverrides=",">
+                #{authorId},
+                <if test="commentableType!=null and !commentableType.equals('')">
+                    #{commentableType},
+                </if>
+                #{commentableId},
+                <if test="body!=null and !body.equals('')">
+                    #{body},
+                </if>
+                #{parentId},
+                <if test="createdAt!=null">
+                    #{createdAt},
+                </if>
+                <if test="updatedAt!=null">
+                    #{updatedAt}
+                </if>
+            </trim>
+        )
+    </insert>
+
+    <!-- int updateCommentById(Integer id); -->
+    <update id="updateCommentById">
+        update comments
+        <set>
+            <if test="authorId!=null and !authorId.equals('')">
+                author_id = #{authorId},
+            </if>
+            <if test="commentableType!=null and !commentableType.equals('')">
+                commentable_type = #{commentableType},
+            </if>
+            <if test="commentableId!=null and !commentableId.equals('')">
+                commentable_id = #{commentableId},
+            </if>
+            <if test="body!=null and !body.equals('')">
+                body = #{body},
+            </if>
+            <if test="parentId!=null and !parentId.equals('')">
+                parent_id = #{parentId},
+            </if>
+            <if test="createdAt!=null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt!=null">
+                updated_at = #{updatedAt},
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <!-- int deleteComment(Integer id); -->
+    <delete id="deleteComment">
+        delete from comments where id=#{id}
+    </delete>
+
+</mapper>

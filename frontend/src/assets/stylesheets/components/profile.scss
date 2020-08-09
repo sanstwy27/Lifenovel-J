@@ -1,0 +1,231 @@
+@import '../base/fonts.scss';
+@import '../base/colors.scss';
+
+.profile-header {
+  position: relative;
+  margin: 0;
+}
+
+.cover-photo {
+  height: 315px;
+  position: relative;
+  opacity: 1;
+}
+
+.cover-photo::before {
+  content: "";
+  background-image: url('/images/pusheen_background.jpg');
+  opacity: .5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.profile-nav {
+  border: 1px solid $smoke-gray;
+  background-color: $white;
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+
+  ul {
+    padding-left: 220px;
+  }
+
+  li {
+    padding: 15px 20px;
+    border-right: 1px solid $dark-faded-gray;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $faded-gray-hover;
+    }
+  }
+
+  li:first-of-type {
+    border-left: 1px solid $dark-faded-gray;
+  }
+}
+
+.profile {
+  margin: auto;
+}
+
+.profile-info {
+  position: absolute;
+  bottom: 10px;
+  left: 220px;
+
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #1c0800;
+    text-shadow: 2px 2px 2px #F7EEE7;
+    // -webkit-text-stroke-color: black;
+    // -webkit-text-stroke-width: 1px;
+    // --switch: calc((var(--light) - var(--threshold)) * -100%);
+    // color: hsl(0, 0%, var(--switch));
+    opacity: 1;
+    z-index: 2;
+  }
+}
+
+.profile-photo {
+  background-color: $text-gray;
+  padding: 5px;
+
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  img {
+    background: #F7EEE7;
+    width: 160px;
+    height: 160px;
+  }
+}
+
+.profile-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  aside, section {
+    margin: 0;
+  }
+}
+
+.edit-profile-photo {
+  display: none;
+}
+
+.profile-photo:hover {
+  cursor: pointer;
+  .edit-profile-photo {
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 30%;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: black;
+    opacity: .8;
+    span {
+      width: 100px;
+      color: $smoke-gray;
+      text-align: left;
+    }
+    i {
+      padding-left: 5px;
+      transform: scale(1.7);
+      color: $text-gray;
+      z-index: 5;
+    }
+  }
+}
+
+.add-friend, .pending-approval, .remove-friend, .accept-friend {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+
+  .fa-user {
+    transform: scaleX(.9) scaleY(1.1);
+  }
+  .fa-plus {
+    transform: scale(.7) translate(-3px, -3px);
+  }
+
+  button {
+    padding: 7px 7px;
+    min-width: 130px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid $text-gray;
+
+    background: $faded-gray-hover;
+
+    &:hover {
+      background: $comment-background;
+    }
+
+  }
+}
+
+.photo-form {
+  background: white;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+  height: 400px;
+  box-sizing: border-box;
+  padding: 0 10px;
+
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+
+    input[type="submit"], button {
+      cursor: pointer;
+      padding: 7px 20px;
+      margin: 5px;
+      text-align: center;
+      color: white;
+      font-size: 14px;
+      background-color: $light-facebook-blue;
+      border-color: $light-facebook-blue;
+      border-radius: 3px;
+      align-self: flex-end;
+
+      &:hover {
+        background-color: $facebook-blue;
+        border-color: $facebook-blue;
+      }
+    }
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .profile-photo-upload {
+    height: 300px;
+    margin: 10px;
+    cursor: pointer;
+    border: 5px dashed $smoke-gray;
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-gray;
+    i {
+      transform: scale(.8);
+      color: $text-gray;
+    }
+  }
+
+  .preview {
+    width: 300px;
+    margin: 10px;
+    align-items: center;
+    border: 1px solid $smoke-gray;
+  }
+
+  .preview-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+      margin-right: 5px;
+    }
+  }
+}
+
+

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanstwy27.reactfb.dao.LikeDao">
+
+    <!-- List<Like> getLikes(Integer likeableId, String likeableType); -->
+    <select id="getLikes" resultType="com.sanstwy27.reactfb.bean.Like">
+        SELECT
+            max(id) as id,
+            user_id,
+            likeable_type,
+            likeable_id,
+            max(created_at) as created_at,
+            max(updated_at) as updated_at
+        FROM likes WHERE likeable_type = #{likeableType} AND likeable_id IN
+        <foreach collection="likeableIds" item="likeable_id" separator="," open="(" close=")">
+            #{likeable_id}
+        </foreach>
+        GROUP BY user_id, likeable_type, likeable_id
+    </select>
+
+    <!-- Like getLike(Integer likeableId, String likeableType); -->
+    <select id="getLike" resultType="com.sanstwy27.reactfb.bean.Like">
+        SELECT *
+        FROM likes
+        WHERE user_id = #{userId} AND likeable_type = #{likeableType} AND likeable_id = #{likeableId}
+        LIMIT 1
+    </select>
+
+    <!-- int createLike(Like like); -->
+    <insert id="createLike" useGeneratedKeys="true" keyProperty="id">
+        insert into likes(
+        <trim suffixOverrides=",">
+            user_id,
+            <if test="likeableType!=null and !likeableType.equals('')">
+                likeable_type,
+            </if>
+            likeable_id,
+            <if test="createdAt!=null">
+                created_at,
+            </if>
+            <if test="updatedAt!=null">
+                updated_at
+            </if>
+        </trim>
+        )
+        values(
+        <trim suffixOverrides=",">
+            #{userId},
+            <if test="likeableType!=null and !likeableType.equals('')">
+                #{likeableType},
+            </if>
+            #{likeableId},
+            <if test="createdAt!=null">
+                #{createdAt},
+            </if>
+            <if test="updatedAt!=null">
+                #{updatedAt}
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <!-- int deleteLike(Integer likeId); -->
+    <delete id="deleteLike">
+        delete from likes where id=#{likeId}
+    </delete>
+
+
+</mapper>

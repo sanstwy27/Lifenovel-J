@@ -1,0 +1,122 @@
+@import '../base/fonts.scss';
+@import '../base/colors.scss';
+
+.left-nav-bar {
+  display: flex;
+  align-items: center;
+  width: 60%;
+
+  form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  input {
+    border: 1px solid $facebook-blue;
+    border-radius: 3px;
+    background: white;
+    color: black;
+    padding: 5px;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 12px;
+    text-align: left;
+  }
+
+}
+
+.search-bar {
+  padding-left: 10px;
+  width: 100%;
+
+  button {
+    background: $faded-gray-hover;
+    vertical-align: middle;
+    height: 24px;
+    padding: 0 15px;
+    position: relative;
+    right: 42px;
+    border-radius: 0 3px 3px 0;
+
+    &:hover {
+      background: $dark-faded-gray;
+    }
+
+    i {
+      color: $text-gray;
+    }
+  }
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  > * {
+    border-left: 1px solid $facebook-blue;
+  }
+
+  a:first-child {
+    border-left: none;
+  }
+}
+
+
+.nav-link {
+  color: white;
+  font-size: 13px;
+  box-sizing: border-box;
+  margin: 0px 3px;
+
+  border-radius: 3px;
+  padding: 5px 7px;
+  box-sizing: border-box;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: none;
+    background: $facebook-blue;
+  }
+}
+
+.nav-link:first-of-type {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  span {
+    padding-left: 5px;
+  }
+}
+
+.search-results {
+
+  background-color: white;
+  width: 484px;
+  left: 10px;
+  text-align: center;
+  padding: 5px 0 10px 0;
+  z-index: 21;
+
+  .profile-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.user-item a {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 15px;
+  font-weight: bold;
+
+  &:hover {
+    background: $faded-gray-hover;
+  }
+}

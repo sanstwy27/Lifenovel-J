@@ -1,0 +1,36 @@
+@import '../base/fonts.scss';
+@import '../base/colors.scss';
+
+.footer-content {
+
+  &:last-child {
+    padding-top: 5px;
+    color: gray;
+  }
+
+}
+
+footer {
+
+  background-color: $white;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0px 30px 0px;
+  }
+
+  ul:first-of-type {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 10px;
+  }
+
+  li {
+    padding-bottom: 5px;
+    padding-right: 22px;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
